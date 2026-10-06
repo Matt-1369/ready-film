@@ -8,3 +8,4 @@
 @media(max-width:680px){.lab-focus-bar{display:none}.lab-section.is-focused{position:static;padding:48px 5%}.lab-section.is-focused .section-heading{display:block}.lab-section.is-focused .lab-grid{height:auto}.lab-section.is-focused .viewport-wrap,.lab-section.is-focused canvas{height:390px}.lab-open{overflow:auto}}
 
 #explode-control label{display:flex;align-items:baseline;justify-content:space-between;gap:12px;font-size:18px;line-height:1.35;margin-bottom:12px}#explode-control output{float:none;flex-shrink:0;font-size:20px;font-weight:800;font-variant-numeric:tabular-nums;white-space:nowrap}
+.viewer-status.detail-error { opacity: 1; }

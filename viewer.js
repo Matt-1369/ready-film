@@ -3,6 +3,8 @@ import { GLTFLoader } from './vendor/GLTFLoader.js';
 import { OrbitControls } from './vendor/OrbitControls.js';
 import { RoomEnvironment } from './vendor/RoomEnvironment.js';
 import { QUAD_VARIANTS, PART_MODELS } from './model-variants.js';
+import { MODEL_PREVIEWS } from './assets/models/model-previews.js';
+import { readAsset, withDeadline } from './asset-loader.js';
 
 // Saved Tripo outputs from READY and additional website demonstrations.
 // Models are pre-generated; the website makes no Tripo API requests.
@@ -97,9 +99,10 @@ export async function createReadyViewer({ canvas, onStatus = noop, onStats = noo
   const quadLevels = Object.fromEntries(Object.entries(QUAD_VARIANTS).map(([asset, config]) => [asset, config.defaultLevel]));
   let state = { asset: 'knight', mode: 'texture', playing: true, explode: 0, loading: false };
   let current = null, disposed = false, loadSerial = 0, frame = 0, previousTime = 0;
-  let visible = true;
+  let visible = true, activeRequest;
   function getState() {
     return { ...state, availableModes: [...ASSETS[state.asset].modes],
+      hasModel: Boolean(current && current.asset === state.asset && current.mode === state.mode && current.file === fileFor(state.asset, state.mode)),
       quadLevel: quadLevels[state.asset],
       availableQuadLevels: (QUAD_VARIANTS[state.asset]?.levels || []).map(level => ({ ...level })),
       partsCount: partCounts.get(state.asset) };
@@ -132,16 +135,29 @@ export async function createReadyViewer({ canvas, onStatus = noop, onStats = noo
     if (mode === 'rig') return asset === 'knight' ? 'knight_d04.glb' : 'dragon_walk.glb';
     return PART_MODELS[asset].file;
   }
-  async function load(asset, mode, file) {
+  function disposeObject(root) {
+    const textures = new Set(), materials = new Set(), images = new Set();
+    root?.traverse(node => {
+      node.geometry?.dispose();
+      for (const material of node.material ? (Array.isArray(node.material) ? node.material : [node.material]) : []) materials.add(material);
+    });
+    for (const material of materials) {
+      for (const value of Object.values(material)) if (value?.isTexture) textures.add(value);
+      material.dispose();
+    }
+    for (const texture of textures) { images.add(texture.image); texture.dispose(); }
+    for (const image of images) image?.close?.();
+  }
+  async function load(asset, mode, file, signal, onProgress) {
     if (cache.has(file)) return cache.get(file);
-    const pending = (async () => {
-      let root, stats, clips = [];
+      let root, stats, clips = [], texturesByImage = new Map();
+      const preview = MODEL_PREVIEWS[file];
+      const bytes = await readAsset(new URL(preview?.preview || file, BASE), { signal, onProgress });
+      signal.throwIfAborted();
       if (file.endsWith('.obj')) {
-        const response = await fetch(new URL(file, BASE));
-        if (!response.ok) throw new Error(`Model request failed (${response.status}).`);
-        ({ root, stats } = parsePolygonOBJ(await response.text()));
+        ({ root, stats } = parsePolygonOBJ(new TextDecoder().decode(bytes)));
       } else {
-        const gltf = await loader.loadAsync(new URL(file, BASE).href);
+        const gltf = await withDeadline(loader.parseAsync(bytes, BASE.href), signal, result => disposeObject(result.scene));
         root = gltf.scene; clips = gltf.animations;
         let triangles = 0, vertices = 0, meshes = 0;
         const bones = new Set();
@@ -154,6 +170,13 @@ export async function createReadyViewer({ canvas, onStatus = noop, onStats = noo
           const materials = Array.isArray(object.material) ? object.material : [object.material];
           for (const material of materials) {
             if (material.map) material.map.anisotropy = Math.min(8, renderer.capabilities.getMaxAnisotropy());
+            for (const texture of Object.values(material).filter(value => value?.isTexture)) {
+              const textureIndex = gltf.parser?.associations.get(texture)?.textures;
+              const imageIndex = gltf.parser?.json.textures?.[textureIndex]?.source;
+              if (imageIndex === undefined) continue;
+              if (!texturesByImage.has(imageIndex)) texturesByImage.set(imageIndex, new Set());
+              texturesByImage.get(imageIndex).add(texture);
+            }
           }
           if (mode === 'rig') {
             object.material = new THREE.MeshStandardMaterial({ color: COLORS.blue,
@@ -171,7 +194,9 @@ export async function createReadyViewer({ canvas, onStatus = noop, onStats = noo
       const extent = box.getSize(new THREE.Vector3()), scale = 2.65 / Math.max(extent.x, extent.y, extent.z);
       const container = new THREE.Group(); container.add(orientation);
       orientation.position.sub(center); container.scale.setScalar(scale);
-      const bundle = { root, container, stats, file, asset, mode, orientation, mixer: null, bones: [], markers: null, helper: null, pieces: [] };
+      const bundle = { root, container, stats, file, asset, mode, orientation, mixer: null, bones: [], markers: null, helper: null, pieces: [],
+        texturesByImage, previewTextures: new Map(texturesByImage), detailReplacements: new Map(),
+        detailImages: (preview?.images || []).filter(image => !image.previewIsFullResolution && texturesByImage.has(image.index)), detailDone: new Set() };
       if (mode === 'rig') {
         const boneSet = new Set(); root.traverse(object => {
           if (object.isSkinnedMesh) object.skeleton.bones.forEach(b => boneSet.add(b));
@@ -206,10 +231,56 @@ export async function createReadyViewer({ canvas, onStatus = noop, onStats = noo
           bundle.pieces.push({ object, base: object.position.clone(), direction: b.sub(a) });
         });
       }
+      if (signal.aborted) { disposeObject(container); signal.throwIfAborted(); }
+      // Cache only completed models. Cancelled and failed requests are always retryable.
+      cache.set(file, bundle);
       return bundle;
-    })();
-    cache.set(file, pending);
-    try { return await pending; } catch (error) { cache.delete(file); throw error; }
+  }
+  function replaceTextures(bundle, replacements) {
+    bundle.root.traverse(object => {
+      for (const material of object.material ? (Array.isArray(object.material) ? object.material : [object.material]) : []) {
+        for (const key of Object.keys(material)) if (replacements.has(material[key])) material[key] = replacements.get(material[key]);
+      }
+    });
+  }
+  function releaseDetails(bundle) {
+    // Keep previews for instant switching; only the displayed model retains 4K maps.
+    const reverse = new Map([...bundle.detailReplacements].map(([preview, hd]) => [hd, preview]));
+    replaceTextures(bundle, reverse);
+    const images = new Set();
+    for (const texture of reverse.keys()) { images.add(texture.image); texture.dispose(); }
+    for (const image of images) image?.close?.();
+    bundle.texturesByImage = new Map(bundle.previewTextures);
+    bundle.detailReplacements.clear(); bundle.detailDone.clear();
+  }
+  async function upgradeDetails(bundle, signal, serial) {
+    const pending = bundle.detailImages.filter(image => !bundle.detailDone.has(image.index));
+    if (!pending.length) return;
+    onStatus({ type: 'detail', message: 'Loading detail…' });
+    try {
+      for (const image of pending) {
+        const bytes = await readAsset(new URL(image.file, BASE), { signal, priority: 'low' });
+        signal.throwIfAborted();
+        const bitmap = await withDeadline(createImageBitmap(new Blob([bytes], { type: image.mimeType }),
+          { premultiplyAlpha: 'none', colorSpaceConversion: 'none' }), signal, bitmap => bitmap.close());
+        if (signal.aborted || disposed || serial !== loadSerial) { bitmap.close(); return; }
+        // An uploaded Texture cannot change dimensions: replace it with a new GPU texture.
+        const replacements = new Map(), source = new THREE.Source(bitmap);
+        for (const texture of bundle.texturesByImage.get(image.index)) {
+          const next = texture.clone(); next.source = source; next.needsUpdate = true;
+          replacements.set(texture, next); bundle.detailReplacements.set(texture, next);
+        }
+        replaceTextures(bundle, replacements);
+        bundle.texturesByImage.set(image.index, new Set(replacements.values()));
+        for (const texture of replacements.keys()) texture.dispose();
+        bundle.detailDone.add(image.index);
+      }
+      if (serial === loadSerial && !signal.aborted) onStatus({ type: 'ready' });
+    } catch (error) {
+      if (signal.aborted || disposed || serial !== loadSerial) return;
+      onStatus({ type: 'detail-error', message: 'Model ready. High-resolution textures will retry when you select this model again.' });
+      console.warn('[READY textures]', error);
+    }
   }
   function attach(bundle) {
     if (current) { scene.remove(current.container); if (current.helper) scene.remove(current.helper); if (current.markers) scene.remove(current.markers); }
@@ -220,10 +291,22 @@ export async function createReadyViewer({ canvas, onStatus = noop, onStats = noo
   }
   async function refresh() {
     const serial = ++loadSerial, asset = state.asset, mode = state.mode, file = fileFor(asset, mode);
+    activeRequest?.abort();
+    activeRequest = new AbortController();
+    const signal = activeRequest.signal;
+    if (current && current.file !== file) releaseDetails(current);
+    // Keep the previous model only when comparing budgets of the same asset.
+    if (current && (current.asset !== asset || current.mode !== mode)) {
+      scene.remove(current.container); if (current.helper) scene.remove(current.helper); if (current.markers) scene.remove(current.markers);
+      current = null;
+    }
     state.loading = true; notify();
-    onStatus({ type: 'loading', message: `Loading ${ASSETS[asset].label.toLowerCase()} · ${MODES[mode].toLowerCase()}…` });
+    const message = mode === 'quads' ? 'Updating mesh…' : `Loading ${ASSETS[asset].label.toLowerCase()}…`;
+    onStatus({ type: 'loading', message });
     try {
-      const bundle = await load(asset, mode, file);
+      const bundle = await load(asset, mode, file, signal, progress => {
+        if (serial === loadSerial && !signal.aborted) onStatus({ type: 'loading', message, ...progress });
+      });
       if (disposed || serial !== loadSerial) return getState();
       attach(bundle); state.loading = false;
       onStats({ asset, label: ASSETS[asset].label, mode, ...bundle.stats,
@@ -233,6 +316,7 @@ export async function createReadyViewer({ canvas, onStatus = noop, onStats = noo
         : mode === 'quads' ? 'Original polygon edges · triangulation diagonals hidden'
         : 'Original Tripo model and embedded material textures';
       onStatus({ type: 'ready', message: guidance }); notify();
+      void upgradeDetails(bundle, signal, serial);
     } catch (error) {
       if (disposed || serial !== loadSerial) return getState();
       // A failed topology swap keeps both the displayed model and its selected budget.
@@ -301,19 +385,14 @@ export async function createReadyViewer({ canvas, onStatus = noop, onStats = noo
   function capture() { renderer.render(scene, camera); return canvas.toDataURL('image/png'); }
   function dispose() {
     disposed = true; loadSerial++; cancelAnimationFrame(frame); sizeObserver.disconnect(); visibilityObserver.disconnect(); controls.dispose();
-    cache.forEach(async promise => {
-      try {
-        const bundle = await promise;
+    activeRequest?.abort();
+    cache.forEach(bundle => {
+        releaseDetails(bundle);
         bundle.mixer?.stopAllAction();
-        for (const object of [bundle.container, bundle.helper, bundle.markers].filter(Boolean)) object.traverse(node => {
-          node.geometry?.dispose();
-          const materials = node.material ? (Array.isArray(node.material) ? node.material : [node.material]) : [];
-          materials.forEach(material => { Object.values(material).filter(v => v?.isTexture).forEach(t => t.dispose()); material.dispose(); });
-        });
-      } catch { /* Failed assets have no GPU resources. */ }
+        for (const object of [bundle.container, bundle.helper, bundle.markers].filter(Boolean)) disposeObject(object);
     });
+    cache.clear();
     environment.dispose(); renderer.dispose();
   }
-  await refresh();
-  return { selectAsset, setMode, setPlaying, setExplode, setQuadLevel, resetView, capture, getState, dispose };
+  return { start: refresh, selectAsset, setMode, setPlaying, setExplode, setQuadLevel, resetView, capture, getState, dispose };
 }

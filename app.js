@@ -1,4 +1,4 @@
-import { createReadyViewer } from './viewer.js';
+import { createReadyViewer } from './viewer.js?v=20261006-models2';
 const $ = id => document.getElementById(id);
 const assetButtons = [...document.querySelectorAll('[data-asset]')];
 const modeButtons = [...document.querySelectorAll('[data-mode]')];
@@ -10,7 +10,7 @@ const copy = {
 };
 const modeLabels={texture:'TEXTURED MODEL',quads:'NATIVE TOPOLOGY',rig:'RIG + MOTION',parts:'SEPARATE PARTS'};
 const notes={texture:'Original PBR materials, viewed with neutral studio lighting.',quads:'Blue lines follow the source polygon boundaries. Triangulation diagonals are hidden.',rig:'Pink markers show actual skeleton joints. Motion comes from a Tripo animation output.',parts:''};
-let viewer, assetData, lastState={asset:'knight',mode:'texture'}, renderedStats, toastTimer, loadingTimer;
+let viewer, assetData, lastState={asset:'knight',mode:'texture'}, renderedStats, toastTimer, loadingTimer, loadingStatus, loadingVisible=false;
 function toast(message){$('toast').textContent=message;$('toast').classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('toast').classList.remove('show'),2800)}
 function setInputs(asset){
   const container=$('input-images');container.replaceChildren();
@@ -21,8 +21,8 @@ function setInputs(asset){
 }
 function onModeChange(state){
   lastState=state;
-  assetButtons.forEach(b=>{const active=b.dataset.asset===state.asset;b.classList.toggle('selected',active);b.setAttribute('aria-pressed',String(active));b.disabled=state.loading});
-  modeButtons.forEach(b=>{const active=b.dataset.mode===state.mode;b.classList.toggle('selected',active);b.setAttribute('aria-pressed',String(active));b.disabled=state.loading||!state.availableModes.includes(b.dataset.mode)});
+  assetButtons.forEach(b=>{const active=b.dataset.asset===state.asset;b.classList.toggle('selected',active);b.setAttribute('aria-pressed',String(active));b.disabled=false});
+  modeButtons.forEach(b=>{const active=b.dataset.mode===state.mode;b.classList.toggle('selected',active);b.setAttribute('aria-pressed',String(active));b.disabled=!state.availableModes.includes(b.dataset.mode)});
   $('asset-title').textContent=copy[state.asset].title;$('asset-description').textContent=copy[state.asset].description;
   const partsLabel=state.partsCount===undefined?'Parts':`${state.partsCount} parts`;
   $('parts-mode-label').textContent=partsLabel;
@@ -34,7 +34,9 @@ function onModeChange(state){
   $('animation-control').hidden=state.mode!=='rig';$('explode-control').hidden=state.mode!=='parts';
   const levels=state.availableQuadLevels;
   $('level-control').hidden=state.mode!=='quads'||levels.length<2;
-  $('quad-level').disabled=state.loading;$('explode').disabled=state.loading;
+  const modelUnavailable=state.loading||state.hasModel===false;
+  $('quad-level').disabled=false;$('explode').disabled=modelUnavailable;
+  $('play-animation').disabled=modelUnavailable;$('save-frame').disabled=modelUnavailable;
   const levelSignature=JSON.stringify(levels);
   if($('quad-level').dataset.options!==levelSignature){
     $('quad-level').replaceChildren(...levels.map(level=>new Option(level.label,level.id)));
@@ -49,25 +51,49 @@ function onStats(stats){
   const facts=stats.mode==='quads'?[[stats.quads,'Quad faces'],[stats.faces,'Total faces']]:stats.mode==='rig'?[[stats.joints,'Skeleton joints'],['LIVE','Tripo motion']]:stats.mode==='parts'?[[stats.parts,'Separate meshes'],['AI','Segmentation']]:[[Math.round(stats.triangles),'Triangles'],['PBR','Materials']];
   $('model-stats').replaceChildren(...facts.map(([value,label])=>{const d=document.createElement('div');d.className='stat';const s=document.createElement('strong');s.textContent=typeof value==='number'?value.toLocaleString():value;const l=document.createElement('span');l.textContent=label;d.append(s,l);return d}));
 }
-function onStatus({type,message}){
-  clearTimeout(loadingTimer);
+function showLoadingStatus(){
+  if(!loadingStatus)return;
+  loadingVisible=true;
+  const {message,percent}=loadingStatus;
+  $('viewer-status').textContent=`${message}${Number.isFinite(percent)?` ${Math.round(Math.max(0,Math.min(100,percent)))}%`:''}`;
+  $('viewer-status').className='viewer-status loading';
+}
+function onStatus({type,message,progress,percent,loaded,total}){
   const status=$('viewer-status'), loading=type==='loading';
   $('model-canvas').setAttribute('aria-busy',String(loading));
   $('model-stats').setAttribute('aria-busy',String(loading));
-  status.textContent='';status.className='viewer-status ready';
   if(loading){
+    const wasLoading=Boolean(loadingStatus), value=progress||{percent,loaded,total};
+    const amount=Number.isFinite(value.percent)?value.percent:
+      Number.isFinite(value.loaded)&&Number.isFinite(value.total)&&value.total>0?value.loaded/value.total*100:undefined;
+    loadingStatus={message:message||(lastState.mode==='quads'?'Updating mesh…':'Loading model…'),percent:amount};
     // Keep the figures belonging to the model still on screen during a topology swap.
     if(renderedStats?.asset!==lastState.asset||renderedStats?.mode!==lastState.mode)$('model-stats').replaceChildren();
-    const loadingText=lastState.mode==='quads'?'Updating mesh…':'Loading model…';
-    // Cached and quick loads finish without flashing a status message.
-    loadingTimer=setTimeout(()=>{status.textContent=loadingText;status.className='viewer-status loading'},250);
+    if(loadingVisible)showLoadingStatus();
+    else if(!wasLoading){
+      status.textContent='';status.className='viewer-status ready';
+      // Progress updates share the first delay, so they cannot keep hiding it.
+      loadingTimer=setTimeout(showLoadingStatus,250);
+    }
+    return;
+  }
+  clearTimeout(loadingTimer);loadingTimer=undefined;loadingStatus=undefined;loadingVisible=false;
+  status.textContent='';status.className='viewer-status ready';
+  if(type==='detail'){
+    status.textContent='Loading detail…';status.className='viewer-status loading detail';
+  }else if(type==='detail-error'){
+    status.textContent='Model ready. High-resolution textures will retry when you select this model again.';
+    status.className='viewer-status detail-error';
   }else if(type==='error'||type==='unsupported'){
     status.textContent=message;status.className=`viewer-status ${type}`;
   }
 }
-async function change(action){try{await action()}catch(e){console.error(e);toast('This asset could not load. Please try again.')}}
+async function change(action){try{await action()}catch(e){console.error(e);onStatus({type:'error',message:'This asset could not load. Please try again.'})}}
+async function loadCaptions(){
+  try{const response=await fetch('data/assets.json');if(response.ok){assetData=await response.json();setInputs(lastState.asset)}}catch(e){console.warn('Asset captions unavailable',e)}
+}
 async function init(){
-  try{const response=await fetch('data/assets.json');if(response.ok)assetData=await response.json()}catch(e){console.warn('Asset captions unavailable',e)}
+  void loadCaptions();
   setInputs('knight');
   try{viewer=await createReadyViewer({canvas:$('model-canvas'),onStatus,onStats,onModeChange})}catch(e){console.error(e);return}
   assetButtons.forEach(b=>b.addEventListener('click',()=>change(()=>viewer.selectAsset(b.dataset.asset))));
@@ -82,6 +108,7 @@ async function init(){
     toast(resetParts?'View and parts reset':'View reset');
   });
   $('save-frame').addEventListener('click',()=>{const a=document.createElement('a');a.href=viewer.capture();a.download=`READY_${lastState.asset}_${lastState.mode}.png`;a.click();toast('Model image saved')});
+  await change(()=>viewer.start());
 }
 init();
 function focusLab(active){$('lab').classList.toggle('is-focused',active);document.body.classList.toggle('lab-open',active);$('focus-lab').textContent=active?'Exit expanded view ×':'Expand asset lab ↗';$('focus-lab').setAttribute('aria-pressed',String(active))}
