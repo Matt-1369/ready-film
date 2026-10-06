@@ -1,7 +1,18 @@
-import { createReadyViewer } from './viewer.js?v=20261006-models2';
+import { createReadyViewer } from './viewer.js?v=20261006-models3';
 const $ = id => document.getElementById(id);
 const assetButtons = [...document.querySelectorAll('[data-asset]')];
 const modeButtons = [...document.querySelectorAll('[data-mode]')];
+// Native image lazy-loading may fetch several screens ahead. Keep large process
+// stills and the asset board from competing with interactive model downloads.
+const deferredImages = new IntersectionObserver(entries => {
+  for (const { target, isIntersecting } of entries) {
+    if (!isIntersecting) continue;
+    target.src = target.dataset.deferredSrc;
+    delete target.dataset.deferredSrc;
+    deferredImages.unobserve(target);
+  }
+}, { rootMargin: '200px 0px' });
+document.querySelectorAll('img[data-deferred-src]').forEach(image => deferredImages.observe(image));
 const copy = {
   knight: {title:'The knight.',description:'Explore the original knight assets and three polygon budgets remeshed from the same source model for this website.',input:'Four views of one character. One consistent 3D model.'},
   dragon: {title:'The dragon.',description:'A hand-drawn creature becomes a textured 3D dragon, with a native quad mesh and a 24-joint walking rig.',input:'One dragon sketch becomes a textured, rigged creature.'},
@@ -10,12 +21,14 @@ const copy = {
 };
 const modeLabels={texture:'TEXTURED MODEL',quads:'NATIVE TOPOLOGY',rig:'RIG + MOTION',parts:'SEPARATE PARTS'};
 const notes={texture:'Original PBR materials, viewed with neutral studio lighting.',quads:'Blue lines follow the source polygon boundaries. Triangulation diagonals are hidden.',rig:'Pink markers show actual skeleton joints. Motion comes from a Tripo animation output.',parts:''};
-let viewer, assetData, lastState={asset:'knight',mode:'texture'}, renderedStats, toastTimer, loadingTimer, loadingStatus, loadingVisible=false;
+let viewer, assetData, lastState={asset:'knight',mode:'texture'}, renderedStats, toastTimer, loadingTimer, loadingStatus, loadingVisible=false, inputAsset, inputData;
 function toast(message){$('toast').textContent=message;$('toast').classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('toast').classList.remove('show'),2800)}
 function setInputs(asset){
-  const container=$('input-images');container.replaceChildren();
   const data=assetData?.assets?.find(a=>a.id===asset);
-  for(const input of data?.inputs||[]){const img=document.createElement('img');img.src=typeof input==='string'?input:(input.path||input.src);img.alt=typeof input==='string'?`${asset} input reference`:(input.label||input.alt||`${asset} input reference`);img.loading='lazy';container.append(img)}
+  if(inputAsset===asset&&inputData===data)return;
+  inputAsset=asset;inputData=data;
+  const container=$('input-images');container.replaceChildren();
+  for(const input of data?.inputs||[]){const img=document.createElement('img');img.src=typeof input==='string'?input:(input.thumbnail||input.path||input.src);img.alt=typeof input==='string'?`${asset} input reference`:(input.label||input.alt||`${asset} input reference`);img.loading='lazy';img.decoding='async';img.fetchPriority='low';container.append(img)}
   if(asset==='chest'){const text=document.createElement('span');text.className='text-prompt';text.textContent='Text → 3D · Fantasy treasure chest';container.append(text)}
   $('input-caption').textContent=copy[asset].input;
 }
@@ -80,7 +93,7 @@ function onStatus({type,message,progress,percent,loaded,total}){
   clearTimeout(loadingTimer);loadingTimer=undefined;loadingStatus=undefined;loadingVisible=false;
   status.textContent='';status.className='viewer-status ready';
   if(type==='detail'){
-    status.textContent='Loading detail…';status.className='viewer-status loading detail';
+    status.textContent='Model ready · refining textures…';status.className='viewer-status loading detail';
   }else if(type==='detail-error'){
     status.textContent='Model ready. High-resolution textures will retry when you select this model again.';
     status.className='viewer-status detail-error';
@@ -90,7 +103,7 @@ function onStatus({type,message,progress,percent,loaded,total}){
 }
 async function change(action){try{await action()}catch(e){console.error(e);onStatus({type:'error',message:'This asset could not load. Please try again.'})}}
 async function loadCaptions(){
-  try{const response=await fetch('data/assets.json');if(response.ok){assetData=await response.json();setInputs(lastState.asset)}}catch(e){console.warn('Asset captions unavailable',e)}
+  try{const response=await fetch('data/assets.json?v=20261006-models3');if(response.ok){assetData=await response.json();setInputs(lastState.asset)}}catch(e){console.warn('Asset captions unavailable',e)}
 }
 async function init(){
   void loadCaptions();

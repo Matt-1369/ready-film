@@ -7,10 +7,22 @@
       "model": "Tripo H3.1",
       "preview": "assets/media/knight-model.webp",
       "inputs": [
-        "assets/inputs/knight_front.jpg",
-        "assets/inputs/knight_left.jpg",
-        "assets/inputs/knight_back.jpg",
-        "assets/inputs/knight_right.jpg"
+        {
+          "path": "assets/inputs/knight_front.jpg",
+          "thumbnail": "assets/inputs/thumbs/knight_front.jpg"
+        },
+        {
+          "path": "assets/inputs/knight_left.jpg",
+          "thumbnail": "assets/inputs/thumbs/knight_left.jpg"
+        },
+        {
+          "path": "assets/inputs/knight_back.jpg",
+          "thumbnail": "assets/inputs/thumbs/knight_back.jpg"
+        },
+        {
+          "path": "assets/inputs/knight_right.jpg",
+          "thumbnail": "assets/inputs/thumbs/knight_right.jpg"
+        }
       ],
       "stats": {
         "polys": 7978,
@@ -32,7 +44,10 @@
       "model": "Tripo P2.0",
       "preview": "assets/media/dragon-model.webp",
       "inputs": [
-        "assets/inputs/dragon_sketch.jpg"
+        {
+          "path": "assets/inputs/dragon_sketch.jpg",
+          "thumbnail": "assets/inputs/thumbs/dragon_sketch.jpg"
+        }
       ],
       "stats": {
         "polys": 4829,
@@ -52,7 +67,10 @@
       "model": "Tripo P2.0",
       "preview": "assets/media/tavern-model.webp",
       "inputs": [
-        "assets/inputs/tavern.jpg"
+        {
+          "path": "assets/inputs/tavern.jpg",
+          "thumbnail": "assets/inputs/thumbs/tavern.jpg"
+        }
       ],
       "stats": {
         "polys": 15809,

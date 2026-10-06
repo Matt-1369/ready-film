@@ -1,6 +1,6 @@
 // Requests have both a stalled-transfer deadline and an overall deadline.
 // Abort the transport itself so a retry never joins an old, hung Three request.
-export async function readAsset(url, { signal, onProgress = () => {}, priority = 'high' } = {}) {
+export async function readAsset(url, { signal, onProgress = () => {}, priority = 'high', gzip = false } = {}) {
   const controller = new AbortController();
   const abort = () => controller.abort(signal.reason);
   if (signal?.aborted) abort();
@@ -14,7 +14,7 @@ export async function readAsset(url, { signal, onProgress = () => {}, priority =
     const response = await fetch(url, { signal: controller.signal, priority });
     if (!response.ok) throw new Error(`Model request failed (${response.status}).`);
     const total = Number(response.headers.get('Content-Length')) || 0;
-    if (!response.body?.getReader) return await response.arrayBuffer();
+    if (!response.body?.getReader) return await decode(await response.arrayBuffer());
     const reader = response.body.getReader(), chunks = [];
     let loaded = 0;
     for (;;) {
@@ -26,10 +26,20 @@ export async function readAsset(url, { signal, onProgress = () => {}, priority =
     const result = new Uint8Array(loaded);
     let offset = 0;
     for (const chunk of chunks) { result.set(chunk, offset); offset += chunk.byteLength; }
-    return result.buffer;
+    return await decode(result.buffer);
   } finally {
     clearTimeout(stalled); clearTimeout(totalTimer);
     signal?.removeEventListener('abort', abort);
+  }
+  async function decode(bytes) {
+    controller.signal.throwIfAborted();
+    const header = new Uint8Array(bytes, 0, Math.min(2, bytes.byteLength));
+    // Some hosts already decode Content-Encoding:gzip in fetch. Never inflate twice.
+    if (!gzip || header[0] !== 0x1f || header[1] !== 0x8b) return bytes;
+    const stream = new Blob([bytes]).stream().pipeThrough(new DecompressionStream('gzip'), { signal: controller.signal });
+    const result = await new Response(stream).arrayBuffer();
+    controller.signal.throwIfAborted();
+    return result;
   }
 }
 

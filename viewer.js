@@ -3,8 +3,8 @@ import { GLTFLoader } from './vendor/GLTFLoader.js';
 import { OrbitControls } from './vendor/OrbitControls.js';
 import { RoomEnvironment } from './vendor/RoomEnvironment.js';
 import { QUAD_VARIANTS, PART_MODELS } from './model-variants.js';
-import { MODEL_PREVIEWS } from './assets/models/model-previews.js';
-import { readAsset, withDeadline } from './asset-loader.js';
+import { MODEL_PREVIEWS } from './assets/models/model-previews.js?v=20261006-models3';
+import { readAsset, withDeadline } from './asset-loader.js?v=20261006-models3';
 
 // Saved Tripo outputs from READY and additional website demonstrations.
 // Models are pre-generated; the website makes no Tripo API requests.
@@ -152,7 +152,8 @@ export async function createReadyViewer({ canvas, onStatus = noop, onStats = noo
     if (cache.has(file)) return cache.get(file);
       let root, stats, clips = [], texturesByImage = new Map();
       const preview = MODEL_PREVIEWS[file];
-      const bytes = await readAsset(new URL(preview?.preview || file, BASE), { signal, onProgress });
+      const gzip = Boolean(preview?.compressed && typeof DecompressionStream === 'function');
+      const bytes = await readAsset(new URL(gzip ? preview.compressed : preview?.preview || file, BASE), { signal, onProgress, gzip });
       signal.throwIfAborted();
       if (file.endsWith('.obj')) {
         ({ root, stats } = parsePolygonOBJ(new TextDecoder().decode(bytes)));
@@ -256,7 +257,7 @@ export async function createReadyViewer({ canvas, onStatus = noop, onStats = noo
   async function upgradeDetails(bundle, signal, serial) {
     const pending = bundle.detailImages.filter(image => !bundle.detailDone.has(image.index));
     if (!pending.length) return;
-    onStatus({ type: 'detail', message: 'Loading detail…' });
+    onStatus({ type: 'detail', message: 'Model ready · refining textures…' });
     try {
       for (const image of pending) {
         const bytes = await readAsset(new URL(image.file, BASE), { signal, priority: 'low' });

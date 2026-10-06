@@ -1,8 +1,9 @@
 {
   "chest_tex.glb": {
-    "preview": "chest_tex.preview.glb",
-    "previewBytes": 1494516,
+    "preview": "chest_tex.preview-v2.glb",
+    "previewBytes": 929044,
     "originalBytes": 7317204,
+    "previewSha256": "11d479683f7dedbe03894fe669bd0672bad97eda09ffde9c9aa460e61b5812ae",
     "images": [
       {
         "index": 0,
@@ -12,9 +13,9 @@
         "sha256": "8ab9d7f28e9896dee99e0d49ecf90a7e404956ace032fc5a1630308eeccc36fb",
         "width": 4096,
         "height": 4096,
-        "previewWidth": 1024,
-        "previewHeight": 1024,
-        "previewBytes": 207985,
+        "previewWidth": 256,
+        "previewHeight": 256,
+        "previewBytes": 23492,
         "previewIsFullResolution": false
       },
       {
@@ -25,9 +26,9 @@
         "sha256": "0139b62014d2683ba3c1d3b6a746175ab250488cf34090bab7de417828ba9954",
         "width": 4096,
         "height": 4096,
-        "previewWidth": 1024,
-        "previewHeight": 1024,
-        "previewBytes": 112751,
+        "previewWidth": 256,
+        "previewHeight": 256,
+        "previewBytes": 10793,
         "previewIsFullResolution": false
       },
       {
@@ -38,17 +39,22 @@
         "sha256": "53114aa44d03cf3df360ed0bea58798b2e2bbe22d6e696bc9e264a31a44a2396",
         "width": 4096,
         "height": 4096,
-        "previewWidth": 1024,
-        "previewHeight": 1024,
-        "previewBytes": 310952,
+        "previewWidth": 256,
+        "previewHeight": 256,
+        "previewBytes": 31938,
         "previewIsFullResolution": false
       }
-    ]
+    ],
+    "compression": "gzip",
+    "compressed": "chest_tex.preview-v2.glb.gz",
+    "compressedBytes": 647144,
+    "compressedSha256": "16c7df1803b58faa7424134fa3047300f5a85989141672ba50506d30065ec3d1"
   },
   "dragon_tex.glb": {
-    "preview": "dragon_tex.preview.glb",
-    "previewBytes": 2476440,
+    "preview": "dragon_tex.preview-v2.glb",
+    "previewBytes": 1353676,
     "originalBytes": 12871420,
+    "previewSha256": "6f1a0e06405cd618714816ab2c996dd799c566c08f6b593382399f7a8b62c1ee",
     "images": [
       {
         "index": 0,
@@ -58,9 +64,9 @@
         "sha256": "81237cc9f21b502b72e1ce806ab2f43d9f9d4a0cbff97173d896f260628693f8",
         "width": 4096,
         "height": 4096,
-        "previewWidth": 1024,
-        "previewHeight": 1024,
-        "previewBytes": 318431,
+        "previewWidth": 256,
+        "previewHeight": 256,
+        "previewBytes": 27485,
         "previewIsFullResolution": false
       },
       {
@@ -71,9 +77,9 @@
         "sha256": "8bf72f1f47028b8dfff4461453bf4953cb3ca77aa9b5c57706f6cec6febafb07",
         "width": 4096,
         "height": 4096,
-        "previewWidth": 1024,
-        "previewHeight": 1024,
-        "previewBytes": 208255,
+        "previewWidth": 256,
+        "previewHeight": 256,
+        "previewBytes": 17242,
         "previewIsFullResolution": false
       },
       {
@@ -84,29 +90,44 @@
         "sha256": "d931f38dea07f9919154189f88dae72fad8a6303e139dc4000cc099962c5d2e8",
         "width": 4096,
         "height": 4096,
-        "previewWidth": 1024,
-        "previewHeight": 1024,
-        "previewBytes": 704652,
+        "previewWidth": 256,
+        "previewHeight": 256,
+        "previewBytes": 63841,
         "previewIsFullResolution": false
       }
-    ]
+    ],
+    "compression": "gzip",
+    "compressed": "dragon_tex.preview-v2.glb.gz",
+    "compressedBytes": 805913,
+    "compressedSha256": "908fa4f5d0e5c4c99156c067f01bee79674395d915aabc718117864bc7f1aff3"
   },
   "dragon_walk.glb": {
-    "preview": "dragon_walk.preview.glb",
+    "preview": "dragon_walk.preview-v2.glb",
     "previewBytes": 546240,
     "originalBytes": 546240,
-    "images": []
+    "previewSha256": "3492bbf2784dfc200f7b5e3a1bef5cf1fca639ca6c111686d6b84871d1296985",
+    "images": [],
+    "compression": "gzip",
+    "compressed": "dragon_walk.preview-v2.glb.gz",
+    "compressedBytes": 265191,
+    "compressedSha256": "15dc6339eaf67bfc42afe138de0ec9200809f4955c6755fc691b32812325ea86"
   },
   "knight_d04.glb": {
-    "preview": "knight_d04.preview.glb",
+    "preview": "knight_d04.preview-v2.glb",
     "previewBytes": 1033752,
     "originalBytes": 1033752,
-    "images": []
+    "previewSha256": "f18aa3b95f1ca5e68bc1509b70cb0efebc5593059262eab411684d5d1996a22c",
+    "images": [],
+    "compression": "gzip",
+    "compressed": "knight_d04.preview-v2.glb.gz",
+    "compressedBytes": 595614,
+    "compressedSha256": "4864aafad69f476078dfc66d3ab5654a1be6c6e0b6daf893c0fa564c0c3b3105"
   },
   "knight_seg.glb": {
-    "preview": "knight_seg.preview.glb",
-    "previewBytes": 1947692,
+    "preview": "knight_seg.preview-v2.glb",
+    "previewBytes": 1188292,
     "originalBytes": 5997732,
+    "previewSha256": "cc612b2084988255044cb8d0f6fac9f2dddd6339e60600abf223c5d3a04b375b",
     "images": [
       {
         "index": 0,
@@ -116,9 +137,9 @@
         "sha256": "829c3dae2be00ed90f0fd3b5de1e78a0ef9f73fa3b38488d07f46891c5dc576d",
         "width": 1024,
         "height": 1024,
-        "previewWidth": 256,
-        "previewHeight": 256,
-        "previewBytes": 16860,
+        "previewWidth": 128,
+        "previewHeight": 128,
+        "previewBytes": 5232,
         "previewIsFullResolution": false
       },
       {
@@ -129,9 +150,9 @@
         "sha256": "7d97ae827a172de14f076eaf2e80688e8087ae674a6261af422406b75dd11e10",
         "width": 1024,
         "height": 1024,
-        "previewWidth": 256,
-        "previewHeight": 256,
-        "previewBytes": 17359,
+        "previewWidth": 128,
+        "previewHeight": 128,
+        "previewBytes": 4882,
         "previewIsFullResolution": false
       },
       {
@@ -142,9 +163,9 @@
         "sha256": "3e42c443d9208d823b25b7fdee213a03a85ec1e119f5ce0e600d0d3b55f8e999",
         "width": 1024,
         "height": 1024,
-        "previewWidth": 256,
-        "previewHeight": 256,
-        "previewBytes": 56299,
+        "previewWidth": 128,
+        "previewHeight": 128,
+        "previewBytes": 18444,
         "previewIsFullResolution": false
       },
       {
@@ -155,9 +176,9 @@
         "sha256": "276599a89a8056df3078386f6ac2f4a642abd5026e3eb2c22dec978bbcf6ea36",
         "width": 512,
         "height": 512,
-        "previewWidth": 256,
-        "previewHeight": 256,
-        "previewBytes": 14902,
+        "previewWidth": 128,
+        "previewHeight": 128,
+        "previewBytes": 4344,
         "previewIsFullResolution": false
       },
       {
@@ -168,9 +189,9 @@
         "sha256": "d55126c93ba7b8276ab1de403b3b8145bbe9fc0c1917bdd92b3310ee14c1671f",
         "width": 512,
         "height": 512,
-        "previewWidth": 256,
-        "previewHeight": 256,
-        "previewBytes": 22485,
+        "previewWidth": 128,
+        "previewHeight": 128,
+        "previewBytes": 6409,
         "previewIsFullResolution": false
       },
       {
@@ -181,9 +202,9 @@
         "sha256": "e11708791ae06372973a2a7601e16233ab3cc4e35942080e2616cc0cc9930b4e",
         "width": 512,
         "height": 512,
-        "previewWidth": 256,
-        "previewHeight": 256,
-        "previewBytes": 61673,
+        "previewWidth": 128,
+        "previewHeight": 128,
+        "previewBytes": 19651,
         "previewIsFullResolution": false
       },
       {
@@ -194,9 +215,9 @@
         "sha256": "aa9626bdc695faf2f8849136fc91dfe1f8e75b350c8ed47d85b474d2a374bc37",
         "width": 512,
         "height": 512,
-        "previewWidth": 256,
-        "previewHeight": 256,
-        "previewBytes": 18041,
+        "previewWidth": 128,
+        "previewHeight": 128,
+        "previewBytes": 5184,
         "previewIsFullResolution": false
       },
       {
@@ -207,9 +228,9 @@
         "sha256": "901e3aa47f596b5e684ba610a3b92c57c26234df94066bdde50645e47ecc9b35",
         "width": 512,
         "height": 512,
-        "previewWidth": 256,
-        "previewHeight": 256,
-        "previewBytes": 20129,
+        "previewWidth": 128,
+        "previewHeight": 128,
+        "previewBytes": 6027,
         "previewIsFullResolution": false
       },
       {
@@ -220,9 +241,9 @@
         "sha256": "1a2a0bbe9e5cf08e55f7f07a73879a1d1b7f637a6e2379ec24195cd99c80f21b",
         "width": 512,
         "height": 512,
-        "previewWidth": 256,
-        "previewHeight": 256,
-        "previewBytes": 53236,
+        "previewWidth": 128,
+        "previewHeight": 128,
+        "previewBytes": 17314,
         "previewIsFullResolution": false
       },
       {
@@ -233,9 +254,9 @@
         "sha256": "f4c918c26473ac2a671dee225ebcfd891ff409dcafa8636be3bf386c6a27916c",
         "width": 512,
         "height": 512,
-        "previewWidth": 256,
-        "previewHeight": 256,
-        "previewBytes": 17909,
+        "previewWidth": 128,
+        "previewHeight": 128,
+        "previewBytes": 5038,
         "previewIsFullResolution": false
       },
       {
@@ -246,9 +267,9 @@
         "sha256": "d348d03251f6692389cbf7035fcb304915b84580d0ecf12c9231ee742ce889e7",
         "width": 512,
         "height": 512,
-        "previewWidth": 256,
-        "previewHeight": 256,
-        "previewBytes": 20685,
+        "previewWidth": 128,
+        "previewHeight": 128,
+        "previewBytes": 6151,
         "previewIsFullResolution": false
       },
       {
@@ -259,9 +280,9 @@
         "sha256": "fbfcda878e8781ff57811ed3e8f378e82054a06ab200d4d4aabe83dae38b0b16",
         "width": 512,
         "height": 512,
-        "previewWidth": 256,
-        "previewHeight": 256,
-        "previewBytes": 54308,
+        "previewWidth": 128,
+        "previewHeight": 128,
+        "previewBytes": 17653,
         "previewIsFullResolution": false
       },
       {
@@ -272,9 +293,9 @@
         "sha256": "326d4b31582904135ca5010c91b4366b03e3b33743b4141772b13d291adb773e",
         "width": 512,
         "height": 512,
-        "previewWidth": 256,
-        "previewHeight": 256,
-        "previewBytes": 15667,
+        "previewWidth": 128,
+        "previewHeight": 128,
+        "previewBytes": 4627,
         "previewIsFullResolution": false
       },
       {
@@ -285,9 +306,9 @@
         "sha256": "e85deea55acca5c77b73ab6c442133315e853ec0c9e3756c3f5ce6747125d0ab",
         "width": 512,
         "height": 512,
-        "previewWidth": 256,
-        "previewHeight": 256,
-        "previewBytes": 25586,
+        "previewWidth": 128,
+        "previewHeight": 128,
+        "previewBytes": 7324,
         "previewIsFullResolution": false
       },
       {
@@ -298,9 +319,9 @@
         "sha256": "7414240c7fd278337f4e789af111b44753ef87a26785c670e03c95633fe86d28",
         "width": 512,
         "height": 512,
-        "previewWidth": 256,
-        "previewHeight": 256,
-        "previewBytes": 65198,
+        "previewWidth": 128,
+        "previewHeight": 128,
+        "previewBytes": 20748,
         "previewIsFullResolution": false
       },
       {
@@ -311,9 +332,9 @@
         "sha256": "eb3468fe9e1cd94820eb4134daf75bb03b7109fe39607691d1c16d4832a1f806",
         "width": 512,
         "height": 512,
-        "previewWidth": 256,
-        "previewHeight": 256,
-        "previewBytes": 16599,
+        "previewWidth": 128,
+        "previewHeight": 128,
+        "previewBytes": 4792,
         "previewIsFullResolution": false
       },
       {
@@ -324,9 +345,9 @@
         "sha256": "72a89df81d0ed46c3f56b5c72ea920d5464ecbd8741c024e5bb9d73d99e8b88e",
         "width": 512,
         "height": 512,
-        "previewWidth": 256,
-        "previewHeight": 256,
-        "previewBytes": 17757,
+        "previewWidth": 128,
+        "previewHeight": 128,
+        "previewBytes": 5340,
         "previewIsFullResolution": false
       },
       {
@@ -337,9 +358,9 @@
         "sha256": "a6e63b83e6af12026a80d167dc773c9cd79f720bf17c8e484f279988636343b5",
         "width": 512,
         "height": 512,
-        "previewWidth": 256,
-        "previewHeight": 256,
-        "previewBytes": 49065,
+        "previewWidth": 128,
+        "previewHeight": 128,
+        "previewBytes": 16137,
         "previewIsFullResolution": false
       },
       {
@@ -350,9 +371,9 @@
         "sha256": "2ad6532a8c02bd7324c9de28853c084592712dee6f65a95170d3de866fe858d9",
         "width": 512,
         "height": 512,
-        "previewWidth": 256,
-        "previewHeight": 256,
-        "previewBytes": 15351,
+        "previewWidth": 128,
+        "previewHeight": 128,
+        "previewBytes": 4391,
         "previewIsFullResolution": false
       },
       {
@@ -363,9 +384,9 @@
         "sha256": "1a3931be5bb33edd34981dfd3eea554332d539ec0171c7684e7d9e68da31c7b8",
         "width": 512,
         "height": 512,
-        "previewWidth": 256,
-        "previewHeight": 256,
-        "previewBytes": 18330,
+        "previewWidth": 128,
+        "previewHeight": 128,
+        "previewBytes": 5421,
         "previewIsFullResolution": false
       },
       {
@@ -376,9 +397,9 @@
         "sha256": "e1e17d8d7d2683e0373272b0bf662239650e2438bf1d117bc4e6bc6c82dceae7",
         "width": 512,
         "height": 512,
-        "previewWidth": 256,
-        "previewHeight": 256,
-        "previewBytes": 48331,
+        "previewWidth": 128,
+        "previewHeight": 128,
+        "previewBytes": 15836,
         "previewIsFullResolution": false
       },
       {
@@ -389,9 +410,9 @@
         "sha256": "85a247e8467508fe9f940cea8795c3458a728b22076eff0e904b7d8495ddcb2c",
         "width": 512,
         "height": 512,
-        "previewWidth": 256,
-        "previewHeight": 256,
-        "previewBytes": 14758,
+        "previewWidth": 128,
+        "previewHeight": 128,
+        "previewBytes": 4282,
         "previewIsFullResolution": false
       },
       {
@@ -402,9 +423,9 @@
         "sha256": "04acaf6198ca435835fb596898d8796a5de116320f79dfb1d66904817e5a44d8",
         "width": 512,
         "height": 512,
-        "previewWidth": 256,
-        "previewHeight": 256,
-        "previewBytes": 16050,
+        "previewWidth": 128,
+        "previewHeight": 128,
+        "previewBytes": 4834,
         "previewIsFullResolution": false
       },
       {
@@ -415,9 +436,9 @@
         "sha256": "e657528e536b3fc06f39c6ff3458dbd2ab42ff20e9b970cbcc3b46a878fb26a3",
         "width": 512,
         "height": 512,
-        "previewWidth": 256,
-        "previewHeight": 256,
-        "previewBytes": 43173,
+        "previewWidth": 128,
+        "previewHeight": 128,
+        "previewBytes": 14207,
         "previewIsFullResolution": false
       },
       {
@@ -428,9 +449,9 @@
         "sha256": "1f5b6a3e8092bfdc4363c61fd75b014d35e2e3193f124d0cb89874d4e9861e38",
         "width": 512,
         "height": 512,
-        "previewWidth": 256,
-        "previewHeight": 256,
-        "previewBytes": 10317,
+        "previewWidth": 128,
+        "previewHeight": 128,
+        "previewBytes": 3465,
         "previewIsFullResolution": false
       },
       {
@@ -441,9 +462,9 @@
         "sha256": "924c11a32833b1d15f9ed0e7404ae1493c012222177434ffc3f49ef16c6759ec",
         "width": 512,
         "height": 512,
-        "previewWidth": 256,
-        "previewHeight": 256,
-        "previewBytes": 13384,
+        "previewWidth": 128,
+        "previewHeight": 128,
+        "previewBytes": 4390,
         "previewIsFullResolution": false
       },
       {
@@ -454,9 +475,9 @@
         "sha256": "f5e32056d962bb12d02efdfc33722fa1213e4261637747fe396812d14869fe5e",
         "width": 512,
         "height": 512,
-        "previewWidth": 256,
-        "previewHeight": 256,
-        "previewBytes": 35712,
+        "previewWidth": 128,
+        "previewHeight": 128,
+        "previewBytes": 12628,
         "previewIsFullResolution": false
       },
       {
@@ -467,9 +488,9 @@
         "sha256": "efdc65a74afe9bb334efe2b61ef2f3930dff738b44239456ea3b9424c90709ac",
         "width": 512,
         "height": 512,
-        "previewWidth": 256,
-        "previewHeight": 256,
-        "previewBytes": 20454,
+        "previewWidth": 128,
+        "previewHeight": 128,
+        "previewBytes": 5774,
         "previewIsFullResolution": false
       },
       {
@@ -480,9 +501,9 @@
         "sha256": "88a5d05808e22ef73135509761895ad727c48aed0cd46590797f02bfa9f357e8",
         "width": 512,
         "height": 512,
-        "previewWidth": 256,
-        "previewHeight": 256,
-        "previewBytes": 23491,
+        "previewWidth": 128,
+        "previewHeight": 128,
+        "previewBytes": 7028,
         "previewIsFullResolution": false
       },
       {
@@ -493,9 +514,9 @@
         "sha256": "ea17b82eae4d41ccf5e0f47db66deda900e1c7e56b13e9050002d7e726f67773",
         "width": 512,
         "height": 512,
-        "previewWidth": 256,
-        "previewHeight": 256,
-        "previewBytes": 55573,
+        "previewWidth": 128,
+        "previewHeight": 128,
+        "previewBytes": 18197,
         "previewIsFullResolution": false
       },
       {
@@ -506,9 +527,9 @@
         "sha256": "544f18573cbdcc8aec00453fd09052b5d7d3be7ec069eacdc844a17750f5d0f7",
         "width": 512,
         "height": 512,
-        "previewWidth": 256,
-        "previewHeight": 256,
-        "previewBytes": 15140,
+        "previewWidth": 128,
+        "previewHeight": 128,
+        "previewBytes": 4630,
         "previewIsFullResolution": false
       },
       {
@@ -519,9 +540,9 @@
         "sha256": "ef7d5fb766516c46350680e6e4249848488f2971ace5d7e3d0de4c6a6770864c",
         "width": 512,
         "height": 512,
-        "previewWidth": 256,
-        "previewHeight": 256,
-        "previewBytes": 17200,
+        "previewWidth": 128,
+        "previewHeight": 128,
+        "previewBytes": 5437,
         "previewIsFullResolution": false
       },
       {
@@ -532,9 +553,9 @@
         "sha256": "8110709d59a8ff5a863fc1e24c59c08620ccef15b73b16cef56dee2fb86d414b",
         "width": 512,
         "height": 512,
-        "previewWidth": 256,
-        "previewHeight": 256,
-        "previewBytes": 50239,
+        "previewWidth": 128,
+        "previewHeight": 128,
+        "previewBytes": 16577,
         "previewIsFullResolution": false
       },
       {
@@ -545,9 +566,9 @@
         "sha256": "48f64174c6103affec9a86f977bf06f6c8835df804fe2df95470897a1b5a4b89",
         "width": 512,
         "height": 512,
-        "previewWidth": 256,
-        "previewHeight": 256,
-        "previewBytes": 14268,
+        "previewWidth": 128,
+        "previewHeight": 128,
+        "previewBytes": 4237,
         "previewIsFullResolution": false
       },
       {
@@ -558,9 +579,9 @@
         "sha256": "04f723e1d8bcd0362e2f1817d3f413bf653399a44b0a9c1c6dde82c2f8134810",
         "width": 512,
         "height": 512,
-        "previewWidth": 256,
-        "previewHeight": 256,
-        "previewBytes": 15199,
+        "previewWidth": 128,
+        "previewHeight": 128,
+        "previewBytes": 4719,
         "previewIsFullResolution": false
       },
       {
@@ -571,9 +592,9 @@
         "sha256": "88f737d2d23b79f645cba9994c4e019de102e3718289bef1cfd431de8eeb5942",
         "width": 512,
         "height": 512,
-        "previewWidth": 256,
-        "previewHeight": 256,
-        "previewBytes": 47731,
+        "previewWidth": 128,
+        "previewHeight": 128,
+        "previewBytes": 15685,
         "previewIsFullResolution": false
       },
       {
@@ -584,9 +605,9 @@
         "sha256": "2ec85a9364a1a34652a4544a94121dca11b712d93f559a83da18f1037cd5397f",
         "width": 512,
         "height": 512,
-        "previewWidth": 256,
-        "previewHeight": 256,
-        "previewBytes": 10770,
+        "previewWidth": 128,
+        "previewHeight": 128,
+        "previewBytes": 3580,
         "previewIsFullResolution": false
       },
       {
@@ -597,9 +618,9 @@
         "sha256": "a83dc492b08179bb14f5b1de38fe67af11a8e931678d69e28803821d3c2c9a74",
         "width": 512,
         "height": 512,
-        "previewWidth": 256,
-        "previewHeight": 256,
-        "previewBytes": 15047,
+        "previewWidth": 128,
+        "previewHeight": 128,
+        "previewBytes": 4666,
         "previewIsFullResolution": false
       },
       {
@@ -610,9 +631,9 @@
         "sha256": "0ff1983eb7f0d09eab8f2da34fb57050cad84f88c4c60592a9b00f4f40fa532f",
         "width": 512,
         "height": 512,
-        "previewWidth": 256,
-        "previewHeight": 256,
-        "previewBytes": 47832,
+        "previewWidth": 128,
+        "previewHeight": 128,
+        "previewBytes": 15730,
         "previewIsFullResolution": false
       },
       {
@@ -651,7 +672,7 @@
         "height": 64,
         "previewWidth": 64,
         "previewHeight": 64,
-        "previewBytes": 4468,
+        "previewBytes": 5418,
         "previewIsFullResolution": true
       },
       {
@@ -690,15 +711,20 @@
         "height": 64,
         "previewWidth": 64,
         "previewHeight": 64,
-        "previewBytes": 2203,
+        "previewBytes": 3009,
         "previewIsFullResolution": true
       }
-    ]
+    ],
+    "compression": "gzip",
+    "compressed": "knight_seg.preview-v2.glb.gz",
+    "compressedBytes": 993603,
+    "compressedSha256": "55066f3982ad1a8d48b49c0af08e269cd3493ded2ce16c6caccea554fac47bd2"
   },
   "knight_tex.glb": {
-    "preview": "knight_tex.preview.glb",
-    "previewBytes": 1907536,
+    "preview": "knight_tex.preview-v2.glb",
+    "previewBytes": 1040188,
     "originalBytes": 9899448,
+    "previewSha256": "c1db6ba1b5b26dd7131c4db0a11aba94b6be9cf679c52feaab6dc23322938d23",
     "images": [
       {
         "index": 0,
@@ -708,9 +734,9 @@
         "sha256": "6a5bcef024462ee2f479a0eb50078f9baa73b70dcffc915aa9b712f76c7c81aa",
         "width": 4096,
         "height": 4096,
-        "previewWidth": 1024,
-        "previewHeight": 1024,
-        "previewBytes": 268907,
+        "previewWidth": 256,
+        "previewHeight": 256,
+        "previewBytes": 27777,
         "previewIsFullResolution": false
       },
       {
@@ -721,9 +747,9 @@
         "sha256": "c463a12518cc0b1996a3c4c8474bae0a84beaa831063114bed69d7cbe9dcb4a2",
         "width": 4096,
         "height": 4096,
-        "previewWidth": 1024,
-        "previewHeight": 1024,
-        "previewBytes": 121404,
+        "previewWidth": 256,
+        "previewHeight": 256,
+        "previewBytes": 10787,
         "previewIsFullResolution": false
       },
       {
@@ -734,17 +760,22 @@
         "sha256": "68c03e7e0e81b0ea37d3ab1b0a97d4978de183ff133d140c6d8623f0b1096158",
         "width": 4096,
         "height": 4096,
-        "previewWidth": 1024,
-        "previewHeight": 1024,
-        "previewBytes": 576142,
+        "previewWidth": 256,
+        "previewHeight": 256,
+        "previewBytes": 60543,
         "previewIsFullResolution": false
       }
-    ]
+    ],
+    "compression": "gzip",
+    "compressed": "knight_tex.preview-v2.glb.gz",
+    "compressedBytes": 728045,
+    "compressedSha256": "124b68c359c8cdc4cf2cf2d9a3ec1bfd92c1cfa5a163e0abcb0ad9d23b0841c8"
   },
   "tavern_seg.glb": {
-    "preview": "tavern_seg.preview.glb",
-    "previewBytes": 1915576,
+    "preview": "tavern_seg.preview-v2.glb",
+    "previewBytes": 1577252,
     "originalBytes": 9357740,
+    "previewSha256": "fc9b1afd1a5dac6b79658f2e94e3d62e8a2b4d166dc9945b1bce0dc6078dcb03",
     "images": [
       {
         "index": 0,
@@ -754,9 +785,9 @@
         "sha256": "8ecf8795fd88bde835fb878c79699134e8f79e84c33a45cba2fbbd0c3a60b4cc",
         "width": 1024,
         "height": 1024,
-        "previewWidth": 256,
-        "previewHeight": 256,
-        "previewBytes": 11677,
+        "previewWidth": 128,
+        "previewHeight": 128,
+        "previewBytes": 2850,
         "previewIsFullResolution": false
       },
       {
@@ -767,9 +798,9 @@
         "sha256": "a17a199b2ad6ac35d0cc8a80f3dc7b190923f0daf5e6ae8e3e1229668a73041e",
         "width": 1024,
         "height": 1024,
-        "previewWidth": 256,
-        "previewHeight": 256,
-        "previewBytes": 35379,
+        "previewWidth": 128,
+        "previewHeight": 128,
+        "previewBytes": 7880,
         "previewIsFullResolution": false
       },
       {
@@ -780,9 +811,9 @@
         "sha256": "e4de3d10ffcda89682284bf101e97621ec33f9a1b340576e3380f3c12938b72f",
         "width": 1024,
         "height": 1024,
-        "previewWidth": 256,
-        "previewHeight": 256,
-        "previewBytes": 92991,
+        "previewWidth": 128,
+        "previewHeight": 128,
+        "previewBytes": 27453,
         "previewIsFullResolution": false
       },
       {
@@ -793,9 +824,9 @@
         "sha256": "697a3e5690f74c3a43f3978da8cd0589629d7bcea5bb01e902616824c48ae5b1",
         "width": 2048,
         "height": 2048,
-        "previewWidth": 256,
-        "previewHeight": 256,
-        "previewBytes": 18071,
+        "previewWidth": 128,
+        "previewHeight": 128,
+        "previewBytes": 4775,
         "previewIsFullResolution": false
       },
       {
@@ -806,9 +837,9 @@
         "sha256": "4053f0fabe6daf4320b2efb952950e7b356e2d0580ea435cf06c5fca79d9e54c",
         "width": 2048,
         "height": 2048,
-        "previewWidth": 256,
-        "previewHeight": 256,
-        "previewBytes": 32082,
+        "previewWidth": 128,
+        "previewHeight": 128,
+        "previewBytes": 7438,
         "previewIsFullResolution": false
       },
       {
@@ -819,9 +850,9 @@
         "sha256": "3343c55ca2e7575655d894e25cfe75d0cfe57fad3d0df853e4cb52b04a3266b0",
         "width": 2048,
         "height": 2048,
-        "previewWidth": 256,
-        "previewHeight": 256,
-        "previewBytes": 92172,
+        "previewWidth": 128,
+        "previewHeight": 128,
+        "previewBytes": 26033,
         "previewIsFullResolution": false
       },
       {
@@ -832,9 +863,9 @@
         "sha256": "cd32af5515c67300c1580c740a76aeb05ef9a9cd682aec294309c0121877b8cf",
         "width": 512,
         "height": 512,
-        "previewWidth": 256,
-        "previewHeight": 256,
-        "previewBytes": 8476,
+        "previewWidth": 128,
+        "previewHeight": 128,
+        "previewBytes": 2271,
         "previewIsFullResolution": false
       },
       {
@@ -845,9 +876,9 @@
         "sha256": "10d71e7feb398bbe4f911687c5b4e3d66a7bdf122378fe044263b2d7abe82d27",
         "width": 512,
         "height": 512,
-        "previewWidth": 256,
-        "previewHeight": 256,
-        "previewBytes": 25062,
+        "previewWidth": 128,
+        "previewHeight": 128,
+        "previewBytes": 6310,
         "previewIsFullResolution": false
       },
       {
@@ -858,9 +889,9 @@
         "sha256": "b4cdc35d572de4a8c52ae48319fd37edbfc00cb144bf87368224b4dd7f3d1369",
         "width": 512,
         "height": 512,
-        "previewWidth": 256,
-        "previewHeight": 256,
-        "previewBytes": 75741,
+        "previewWidth": 128,
+        "previewHeight": 128,
+        "previewBytes": 23770,
         "previewIsFullResolution": false
       },
       {
@@ -871,10 +902,10 @@
         "sha256": "63c747f78a70cdee39331de8877c772a8fea9fd429eff9385151af8b8e488b91",
         "width": 256,
         "height": 256,
-        "previewWidth": 256,
-        "previewHeight": 256,
-        "previewBytes": 7846,
-        "previewIsFullResolution": true
+        "previewWidth": 128,
+        "previewHeight": 128,
+        "previewBytes": 1190,
+        "previewIsFullResolution": false
       },
       {
         "index": 10,
@@ -884,10 +915,10 @@
         "sha256": "e906a32293186d7061bd0bfaf4b06701ea91a8c5d201b412b5c126a5677effe6",
         "width": 256,
         "height": 256,
-        "previewWidth": 256,
-        "previewHeight": 256,
-        "previewBytes": 18039,
-        "previewIsFullResolution": true
+        "previewWidth": 128,
+        "previewHeight": 128,
+        "previewBytes": 3065,
+        "previewIsFullResolution": false
       },
       {
         "index": 11,
@@ -897,17 +928,22 @@
         "sha256": "373a783f1651960bf50f14cd9c1055d064e1ef795897a67aacf7174e2e6d6e49",
         "width": 256,
         "height": 256,
-        "previewWidth": 256,
-        "previewHeight": 256,
-        "previewBytes": 50306,
-        "previewIsFullResolution": true
+        "previewWidth": 128,
+        "previewHeight": 128,
+        "previewBytes": 16488,
+        "previewIsFullResolution": false
       }
-    ]
+    ],
+    "compression": "gzip",
+    "compressed": "tavern_seg.preview-v2.glb.gz",
+    "compressedBytes": 845636,
+    "compressedSha256": "48806760e456383b0c5f6e6001d174fec09b99084a58e8e89e329b67f170503e"
   },
   "tavern_tex.glb": {
-    "preview": "tavern_tex.preview.glb",
-    "previewBytes": 2322756,
+    "preview": "tavern_tex.preview-v2.glb",
+    "previewBytes": 1508924,
     "originalBytes": 10783424,
+    "previewSha256": "c4cb2c710071cb4fb738f764c568f30b2bb5c7240ce03b0011336480afa73833",
     "images": [
       {
         "index": 0,
@@ -917,9 +953,9 @@
         "sha256": "bdb404cbb767724b5a2f00d21a16024a348a1aa0757d4f35d534f6e12e980f4d",
         "width": 4096,
         "height": 4096,
-        "previewWidth": 1024,
-        "previewHeight": 1024,
-        "previewBytes": 369645,
+        "previewWidth": 256,
+        "previewHeight": 256,
+        "previewBytes": 28572,
         "previewIsFullResolution": false
       },
       {
@@ -930,9 +966,9 @@
         "sha256": "8172377be8787db1794c99b93b1b58f7641f4f507bdc8ecfad253cb7a84bd4c9",
         "width": 4096,
         "height": 4096,
-        "previewWidth": 1024,
-        "previewHeight": 1024,
-        "previewBytes": 247888,
+        "previewWidth": 256,
+        "previewHeight": 256,
+        "previewBytes": 17580,
         "previewIsFullResolution": false
       },
       {
@@ -943,11 +979,114 @@
         "sha256": "bcc1dd206429a982277465e29cd824422ef516e30df3c2b38153747644ecb529",
         "width": 4096,
         "height": 4096,
-        "previewWidth": 1024,
-        "previewHeight": 1024,
-        "previewBytes": 274098,
+        "previewWidth": 256,
+        "previewHeight": 256,
+        "previewBytes": 31651,
         "previewIsFullResolution": false
       }
-    ]
+    ],
+    "compression": "gzip",
+    "compressed": "tavern_tex.preview-v2.glb.gz",
+    "compressedBytes": 789224,
+    "compressedSha256": "241833628743f98f5468e1cc5e73dc1ad12a12f56563c066f06a544fc25da212"
+  },
+  "dragon_quad.obj": {
+    "preview": "dragon_quad.obj",
+    "previewBytes": 230122,
+    "originalBytes": 230122,
+    "previewSha256": "0ce06bcd0cc4e002741601824ae70e31dbdf104bda0446fe1c528a818dfb2e80",
+    "compressed": "dragon_quad.v2.obj.gz",
+    "compressedBytes": 67176,
+    "compressedSha256": "547305784c2f8476159c8f49e4cf79574743f9484ee60423d0f723a42c5dc255",
+    "compression": "gzip",
+    "images": []
+  },
+  "knight_q15k.obj": {
+    "preview": "knight_q15k.obj",
+    "previewBytes": 824715,
+    "originalBytes": 824715,
+    "previewSha256": "aa3649ceb216f8347d53c7eeb7d9d6c4d3d47219aa6953950388ba16da413958",
+    "compressed": "knight_q15k.v2.obj.gz",
+    "compressedBytes": 276591,
+    "compressedSha256": "a130d56252e7a0350e548fc24ff42b76d6ee60671f353f79ba00ac68c3dc7077",
+    "compression": "gzip",
+    "images": []
+  },
+  "knight_q2k.obj": {
+    "preview": "knight_q2k.obj",
+    "previewBytes": 96908,
+    "originalBytes": 96908,
+    "previewSha256": "9a1175848e577e1f2ddfa51a8ae2b9297e790fa300a58844b9224d97e7780c76",
+    "compressed": "knight_q2k.v2.obj.gz",
+    "compressedBytes": 35955,
+    "compressedSha256": "74c392b7fdc53fa4adf0567b3f7651b76125ed016b8a01470b35c2a9af3773d4",
+    "compression": "gzip",
+    "images": []
+  },
+  "knight_q8k.obj": {
+    "preview": "knight_q8k.obj",
+    "previewBytes": 430855,
+    "originalBytes": 430855,
+    "previewSha256": "d816c2337d02f305c750a14e84ee0f39d00ac54e74b0fd79a2f139ed2f5cecda",
+    "compressed": "knight_q8k.v2.obj.gz",
+    "compressedBytes": 150403,
+    "compressedSha256": "e0138057d2b80c832b2a2213526e145bd5e57d3dc39bd187b6cc14eb1803c663",
+    "compression": "gzip",
+    "images": []
+  },
+  "knight_quad.obj": {
+    "preview": "knight_quad.obj",
+    "previewBytes": 418527,
+    "originalBytes": 418527,
+    "previewSha256": "06a910e77d81815a10d3c68e4c34a64955430e2ac9f0219b86854c70dcc3bad4",
+    "compressed": "knight_quad.v2.obj.gz",
+    "compressedBytes": 145731,
+    "compressedSha256": "5f760d79080f389d88d540647237942d1357c48afbcadaccc165c3242eb994cc",
+    "compression": "gzip",
+    "images": []
+  },
+  "tavern_q10k.obj": {
+    "preview": "tavern_q10k.obj",
+    "previewBytes": 541929,
+    "originalBytes": 541929,
+    "previewSha256": "757e0920a68cbf21742e191f76348034fbd1a3afba5cc75cc211bca8f74523be",
+    "compressed": "tavern_q10k.v2.obj.gz",
+    "compressedBytes": 150565,
+    "compressedSha256": "bd39a9131f667ac7634c878a447211fa1e1f712a87e46c94c80debee05fbdbad",
+    "compression": "gzip",
+    "images": []
+  },
+  "tavern_q15k.obj": {
+    "preview": "tavern_q15k.obj",
+    "previewBytes": 847952,
+    "originalBytes": 847952,
+    "previewSha256": "c48c61c3f72ecfda9436bff6d789b6664746eff6d9b162762aa993a8ba18fb91",
+    "compressed": "tavern_q15k.v2.obj.gz",
+    "compressedBytes": 227498,
+    "compressedSha256": "dbe33482770940325621ed30e3d04364c14a33f2f3c4a3420bf2863f46feadad",
+    "compression": "gzip",
+    "images": []
+  },
+  "tavern_q2k.obj": {
+    "preview": "tavern_q2k.obj",
+    "previewBytes": 100404,
+    "originalBytes": 100404,
+    "previewSha256": "813a008d2d83b2ad9b7dc537c4a971b000e166c4fc2a19fab1f86807c44cde0b",
+    "compressed": "tavern_q2k.v2.obj.gz",
+    "compressedBytes": 28907,
+    "compressedSha256": "7383f9b36aef42c6b43c97b3a1793c47fb73aaafed6c0447e666a735731049f5",
+    "compression": "gzip",
+    "images": []
+  },
+  "tavern_q5k.obj": {
+    "preview": "tavern_q5k.obj",
+    "previewBytes": 276357,
+    "originalBytes": 276357,
+    "previewSha256": "e5932275fcb493dad8c306066e74fd074540a47429c78d9c37747d8fd649e090",
+    "compressed": "tavern_q5k.v2.obj.gz",
+    "compressedBytes": 77951,
+    "compressedSha256": "d9bea3bed89e39672d16fc408419130e0023bbebbac02a31e265e18a7e5aae18",
+    "compression": "gzip",
+    "images": []
   }
 }
