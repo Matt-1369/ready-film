@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#f5d829">
+  <meta name="description" content="READY — a print-style music video about a fictional 48-hour game jam. Watch the film and explore its Tripo assets plus extra interactive demonstrations.">
+  <title>READY — From an idea to a world</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23f5d829'/%3E%3Ctext x='11' y='49' font-family='Arial' font-weight='900' font-size='47'%3ER%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="style.css">
+  <script type="importmap">{"imports":{"three":"./vendor/three.module.js"}}</script>
+  <script type="module" src="app.js"></script>
+</head>
+<body>
+  <a class="skip" href="#film">Skip to the film</a>
+  <header class="topbar">
+    <a class="wordmark" href="#top" aria-label="READY home">READY<span>↗</span></a>
+    <nav aria-label="Main navigation"><a href="#film">01 / Film</a><a href="#lab">02 / Asset lab</a><a href="#making">03 / Process</a><a href="#board">04 / Asset board</a></nav>
+    <span class="edition">TRIPOTHON S1 <b>FILM / VFX</b></span>
+  </header>
+  <main>
+    <section class="hero" id="top">
+      <div class="hero-type"><div class="eyebrow"><span class="dot"></span> A MUSIC VIDEO BY MATT <span class="right-label">02:05 / 2026</span></div><h1>READY<span class="period">.</span></h1><div class="hero-sub"><p>From an idea<br>to a world.</p><div>A fictional 48-hour game jam.<br>Real 3D assets. A world printed in color.</div></div></div>
+      <div class="hero-frame"><img src="assets/media/hero.jpg" alt="TRI and JAM performing on the bright pink and yellow READY stage" fetchpriority="high"><span class="frame-tag">125 SECONDS OF MAKING THINGS HAPPEN</span><a class="play-disc" href="#film" aria-label="Watch READY">▶</a></div>
+      <div class="hero-bottom"><span>IDEA → MODEL → MOTION → FILM</span><a class="button primary" href="#lab">Explore the real assets <span>↗</span></a><span class="scroll-note">SCROLL TO GO BEHIND THE FRAME ↓</span></div>
+    </section>
+
+    <section class="section film-section" id="film">
+      <div class="section-heading"><div><span class="eyebrow">01 / THE FILM</span><h2>Press play.<br>Build a world.</h2></div><p>TRI and JAM turn a blank screen into a tiny fantasy world. A pop music video told through print textures, game assets and a very long night.</p></div>
+      <div class="film-shell"><video id="film-player" controls playsinline preload="metadata" poster="assets/media/hero.jpg"><source src="assets/media/ready-v3.mp4" type="video/mp4">Your browser cannot play this video. <a href="assets/media/ready-v3.mp4">Download the film.</a></video></div>
+      <div class="film-caption"><span><b>READY</b></span><span>02:05 · 1920 × 1080 · 24 FPS</span><a href="assets/media/ready-v3.mp4" download="READY_V3_Tripo.mp4">Download film ↗</a></div>
+    </section>
+
+    <section class="section lab-section" id="lab">
+      <div class="section-heading"><div><span class="eyebrow">02 / INTERACTIVE ASSET LAB</span><h2>Go beyond<br>the pixels.</h2></div><p>Original Tripo assets from READY, plus new demonstrations for this website. Rotate a model, compare topology, play an animation or separate its parts.</p></div>
+      <div class="lab-focus-bar"><span class="eyebrow">REAL TRIPO OUTPUTS · INTERACTIVE 3D</span><button id="focus-lab" aria-pressed="false">Expand asset lab ↗</button></div>
+      <div class="asset-tabs" role="group" aria-label="Choose an asset"><button class="selected" data-asset="knight" aria-pressed="true"><span>01</span>Knight <small>MULTIVIEW → 3D</small></button><button data-asset="dragon" aria-pressed="false"><span>02</span>Dragon <small>SKETCH → 3D</small></button><button data-asset="tavern" aria-pressed="false"><span>03</span>Tavern <small>IMAGE → 3D</small></button><button data-asset="chest" aria-pressed="false"><span>04</span>Chest <small>TEXT → 3D</small></button></div>
+      <div class="lab-grid">
+        <div class="viewport-wrap"><div class="viewport-label"><span id="model-label">KNIGHT / TEXTURED MODEL</span><span class="live-label"><i></i>LIVE 3D</span></div><canvas id="model-canvas" aria-label="Interactive 3D model. Drag to rotate and scroll to zoom."></canvas><div class="viewport-footer"><span>DRAG TO ROTATE · SCROLL TO ZOOM</span><button class="icon-button" id="reset-view" title="Reset view" aria-label="Reset view">↺</button><button class="icon-button" id="save-frame" title="Save a PNG" aria-label="Save model image">↓</button></div></div>
+        <aside class="lab-controls"><div class="control-top"><span class="eyebrow">INSPECT THE OUTPUT</span><h3 id="asset-title">The knight.</h3><p id="asset-description">Explore the original knight assets and three polygon budgets remeshed from the same source model for this website.</p></div><div class="mode-buttons" role="group" aria-label="View mode"><button class="selected" data-mode="texture" aria-pressed="true"><span>01</span>Texture <b>↗</b></button><button data-mode="quads" aria-pressed="false"><span>02</span>Quads <b>↗</b></button><button data-mode="rig" aria-pressed="false"><span>03</span>Rig + motion <b>↗</b></button><button data-mode="parts" aria-pressed="false"><span>04</span><strong id="parts-mode-label">Parts</strong> <b>↗</b></button></div><div class="extra-control" id="animation-control" hidden><span>TRIPO ANIMATION</span><button id="play-animation" aria-pressed="true">Ⅱ Pause motion</button></div><div class="extra-control" id="explode-control" hidden><label for="explode">Separate the parts <output id="explode-value">0%</output></label><input type="range" id="explode" min="0" max="100" value="0" step="1"></div><div class="extra-control" id="level-control" hidden><label for="quad-level">Target polygon count</label><select id="quad-level" aria-label="Target polygon count"></select></div><div class="viewer-status ready" id="viewer-status" role="status" aria-live="polite" aria-atomic="true"></div><div class="model-stats" id="model-stats"></div><p class="mode-note" id="mode-note">Original PBR materials, viewed with neutral studio lighting.</p></aside>
+      </div>
+      <div class="input-strip"><span class="eyebrow">THE STARTING POINT</span><div id="input-images"></div><p id="input-caption">Four views of one character.<br>One consistent 3D model.</p></div>
+    </section>
+
+    <section class="section making-section" id="making">
+      <div class="section-heading"><div><span class="eyebrow">03 / HOW READY WAS MADE</span><h2>Real assets.<br>Print imagination.</h2></div><p>Tripo built the 3D assets. Generated performance footage, painted environments and a custom print renderer bring them into the same world.</p></div>
+      <div class="process-grid"><article class="process-card"><div class="process-number">01 / MAKE</div><img src="assets/media/knight.jpg" alt="The knight and its reference views in READY" loading="lazy"><h3>From references to 3D.</h3><p>Multiview images for the knight. A sketch for the dragon. An image for the tavern. Text prompts for the props. Tripo H3.1 and P2.0 generate the meshes and materials.</p></article><article class="process-card"><div class="process-number">02 / PREPARE</div><img src="assets/media/rig.jpg" alt="Rigged characters and skeletons in READY" loading="lazy"><h3>Ready for motion.</h3><p>Quad conversion, auto-rigging and animation retargeting. The knight has 41 joints; the dragon has 24. AI segmentation separates the knight into 15 parts.</p></article><article class="process-card"><div class="process-number">03 / COMPOSE</div><img src="assets/media/hero.jpg" alt="The finished print-style performance stage" loading="lazy"><h3>Make it a music video.</h3><p>Seedance performance footage, generated backgrounds and ElevenLabs music meet in a custom JavaScript / three.js pipeline: layered ink, halftones, titles and 3D sequences.</p></article></div>
+      <details class="evidence"><summary><span>Production notes & credits</span><span>REAL OUTPUTS / CLEAR ATTRIBUTION +</span></summary><div class="evidence-body"><div><h3>What Tripo actually did</h3><ul><li>3D generation from multiview, image, sketch and text inputs.</li><li>Quad conversion, 41-joint biped and 24-joint quadruped auto-rigs.</li><li>Animation retargeting, knight segmentation and PBR materials.</li><li>Four tavern variants with different polygon targets.</li></ul></div></div></details>
+    </section>
+
+    <section class="section board-section" id="board"><div class="section-heading"><div><span class="eyebrow">04 / THE VISUAL ASSET BOARD</span><h2>One world.<br>All the pieces.</h2></div><p>A closer look at the cast, environments, props and finished frames that make READY.</p></div><div class="board-image"><img src="assets/media/asset-board.jpg?v=469b4b08c67c" alt="READY visual asset board with the knight, dragon, tavern, treasure chest, reference images and film frames" loading="lazy"></div><div class="board-footer"><span>REFERENCE → MODEL → FINAL FRAME</span><a class="button outline" href="assets/media/asset-board.jpg?v=469b4b08c67c" download="READY_Visual_Asset_Board.jpg">Download asset board <span>↓</span></a></div></section>
+  </main>
+  <footer><div class="footer-title">LET’S MAKE<br>SOMETHING<span>↗</span></div><div class="footer-bottom"><a class="wordmark" href="#top">READY.</a><span>MADE BY MATT · BUILT FOR TRIPOTHON S1</span><img src="assets/tripo-logo.svg" alt="Tripo" width="98" height="24"><a href="#top">BACK TO TOP ↑</a></div></footer>
+  <div id="toast" role="status"></div>
+</body>
+</html>

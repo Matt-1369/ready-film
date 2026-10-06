@@ -1,0 +1,109 @@
+{
+  "knight_tex.glb": {
+    "triangles": 29435,
+    "joints": 0,
+    "parts": 1,
+    "animations": []
+  },
+  "dragon_tex.glb": {
+    "triangles": 32715,
+    "joints": 0,
+    "parts": 1,
+    "animations": []
+  },
+  "tavern_tex.glb": {
+    "triangles": 27503,
+    "joints": 0,
+    "parts": 1,
+    "animations": []
+  },
+  "chest_tex.glb": {
+    "triangles": 27164,
+    "joints": 0,
+    "parts": 1,
+    "animations": []
+  },
+  "knight_d04.glb": {
+    "triangles": 15909,
+    "joints": 41,
+    "parts": 1,
+    "animations": [
+      "dance_04"
+    ]
+  },
+  "dragon_walk.glb": {
+    "triangles": 8718,
+    "joints": 24,
+    "parts": 1,
+    "animations": [
+      "preset:quadruped:walk"
+    ]
+  },
+  "knight_seg.glb": {
+    "triangles": 29435,
+    "joints": 0,
+    "parts": 15,
+    "animations": []
+  },
+  "knight_quad.obj": {
+    "faces": 7978,
+    "quads": 7922,
+    "triangles": 15910,
+    "vertices": 8122,
+    "faceArity": {
+      "4": 7922,
+      "5": 5,
+      "3": 51
+    }
+  },
+  "dragon_quad.obj": {
+    "faces": 4829,
+    "quads": 3889,
+    "triangles": 8718,
+    "vertices": 4426,
+    "faceArity": {
+      "3": 940,
+      "4": 3889
+    }
+  },
+  "tavern_q2k.obj": {
+    "faces": 1830,
+    "quads": 1302,
+    "triangles": 3132,
+    "vertices": 2163,
+    "faceArity": {
+      "3": 528,
+      "4": 1302
+    }
+  },
+  "tavern_q5k.obj": {
+    "faces": 5155,
+    "quads": 3860,
+    "triangles": 9015,
+    "vertices": 5662,
+    "faceArity": {
+      "3": 1295,
+      "4": 3860
+    }
+  },
+  "tavern_q10k.obj": {
+    "faces": 10347,
+    "quads": 7049,
+    "triangles": 17396,
+    "vertices": 10846,
+    "faceArity": {
+      "3": 3298,
+      "4": 7049
+    }
+  },
+  "tavern_q15k.obj": {
+    "faces": 15809,
+    "quads": 11694,
+    "triangles": 27503,
+    "vertices": 16460,
+    "faceArity": {
+      "3": 4115,
+      "4": 11694
+    }
+  }
+}

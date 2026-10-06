@@ -1,0 +1,295 @@
+{
+  "assets": [
+    {
+      "id": "knight",
+      "title": "The knight",
+      "inputType": "Four-view image input",
+      "model": "Tripo H3.1",
+      "preview": "assets/media/knight-model.webp",
+      "inputs": [
+        "assets/inputs/knight_front.jpg",
+        "assets/inputs/knight_left.jpg",
+        "assets/inputs/knight_back.jpg",
+        "assets/inputs/knight_right.jpg"
+      ],
+      "stats": {
+        "polys": 7978,
+        "quads": 7922,
+        "seconds": 94.4,
+        "joints": 41,
+        "parts": 15
+      },
+      "notes": [
+        "Native quad generation; separate textured and quad outputs.",
+        "Actual biped auto-rig, skin weights and 15-part segmentation.",
+        "Presets used: dance_01, dance_04, walk, slash and idle."
+      ]
+    },
+    {
+      "id": "dragon",
+      "title": "The dragon",
+      "inputType": "Single sketch input",
+      "model": "Tripo P2.0",
+      "preview": "assets/media/dragon-model.webp",
+      "inputs": [
+        "assets/inputs/dragon_sketch.jpg"
+      ],
+      "stats": {
+        "polys": 4829,
+        "quads": 3889,
+        "seconds": 64.6,
+        "joints": 24
+      },
+      "notes": [
+        "Actual quadruped auto-rig and walk preset.",
+        "Native quad generation; separate textured and quad outputs."
+      ]
+    },
+    {
+      "id": "tavern",
+      "title": "The tavern",
+      "inputType": "Single image input",
+      "model": "Tripo P2.0",
+      "preview": "assets/media/tavern-model.webp",
+      "inputs": [
+        "assets/inputs/tavern.jpg"
+      ],
+      "stats": {
+        "polys": 15809,
+        "quads": 11694,
+        "seconds": 43.1
+      },
+      "notes": [
+        "Four independent generation tasks at target face budgets of 2K, 5K, 10K and 15K.",
+        "Targets are requested budgets; measured face and quad counts are reported separately."
+      ]
+    },
+    {
+      "id": "chest",
+      "title": "Chest",
+      "inputType": "Text-to-3D",
+      "model": "Tripo H3.1",
+      "preview": "assets/media/chest-model.webp",
+      "inputs": [],
+      "stats": {
+        "polys": 2200,
+        "quads": 2053,
+        "seconds": 146.1
+      },
+      "notes": [
+        "Real text-to-model asset with textured and quad outputs; Tripo conversion was also used."
+      ]
+    },
+    {
+      "id": "sword",
+      "title": "Sword",
+      "inputType": "Text-to-3D",
+      "model": "Tripo H3.1",
+      "preview": "assets/media/sword-model.webp",
+      "inputs": [],
+      "stats": {
+        "polys": 1540,
+        "quads": 1540,
+        "seconds": 73.3
+      },
+      "notes": [
+        "Real text-to-model asset with textured and quad outputs; Tripo conversion was also used."
+      ]
+    },
+    {
+      "id": "shield",
+      "title": "Shield",
+      "inputType": "Text-to-3D",
+      "model": "Tripo H3.1",
+      "preview": "assets/media/shield-model.webp",
+      "inputs": [],
+      "stats": {
+        "polys": 1487,
+        "quads": 1464,
+        "seconds": 94.4
+      },
+      "notes": [
+        "Real text-to-model asset with textured and quad outputs; Tripo conversion was also used."
+      ]
+    },
+    {
+      "id": "potion",
+      "title": "Potion",
+      "inputType": "Text-to-3D",
+      "model": "Tripo H3.1",
+      "preview": "assets/media/potion-model.webp",
+      "inputs": [],
+      "stats": {
+        "polys": 1548,
+        "quads": 1527,
+        "seconds": 94.8
+      },
+      "notes": [
+        "Real text-to-model asset with textured and quad outputs; Tripo conversion was also used."
+      ]
+    },
+    {
+      "id": "torch",
+      "title": "Torch",
+      "inputType": "Text-to-3D",
+      "model": "Tripo H3.1",
+      "preview": "assets/media/torch-model.webp",
+      "inputs": [],
+      "stats": {
+        "polys": 1688,
+        "quads": 1654,
+        "seconds": 86.0
+      },
+      "notes": [
+        "Real text-to-model asset with textured and quad outputs; Tripo conversion was also used."
+      ]
+    },
+    {
+      "id": "barrel",
+      "title": "Barrel",
+      "inputType": "Text-to-3D",
+      "model": "Tripo H3.1",
+      "preview": "assets/media/barrel-model.webp",
+      "inputs": [],
+      "stats": {
+        "polys": 1420,
+        "quads": 1416,
+        "seconds": 124.7
+      },
+      "notes": [
+        "Real text-to-model asset with textured and quad outputs; Tripo conversion was also used."
+      ]
+    }
+  ],
+  "tavernVariants": [
+    {
+      "id": "tavern-2k",
+      "targetFaces": 2000,
+      "polys": 1830,
+      "quads": 1302,
+      "seconds": 13.1
+    },
+    {
+      "id": "tavern-5k",
+      "targetFaces": 5000,
+      "polys": 5155,
+      "quads": 3860,
+      "seconds": 30.2
+    },
+    {
+      "id": "tavern-10k",
+      "targetFaces": 10000,
+      "polys": 10347,
+      "quads": 7049,
+      "seconds": 51.6
+    },
+    {
+      "id": "tavern-15k",
+      "targetFaces": 15000,
+      "polys": 15809,
+      "quads": 11694,
+      "seconds": 43.1
+    }
+  ],
+  "filmStills": [
+    {
+      "id": "hero",
+      "time": 35,
+      "title": "Concert stage",
+      "src": "assets/media/hero.jpg"
+    },
+    {
+      "id": "room",
+      "time": 10,
+      "title": "Hour 46: a game with no assets",
+      "src": "assets/media/room.jpg"
+    },
+    {
+      "id": "knight",
+      "time": 19,
+      "title": "Four reference views",
+      "src": "assets/media/knight.jpg"
+    },
+    {
+      "id": "tavern",
+      "time": 52.9,
+      "title": "Four independently generated face budgets",
+      "src": "assets/media/tavern.jpg"
+    },
+    {
+      "id": "segmentation",
+      "time": 56.9,
+      "title": "15 actual model parts",
+      "src": "assets/media/segmentation.jpg"
+    },
+    {
+      "id": "pbr",
+      "time": 61.65,
+      "title": "Actual PBR texture maps",
+      "src": "assets/media/pbr.jpg"
+    },
+    {
+      "id": "rig",
+      "time": 99.83,
+      "title": "Auto-rigged knight and dragon",
+      "src": "assets/media/rig.jpg"
+    },
+    {
+      "id": "game",
+      "time": 114.8,
+      "title": "Hour 48: the finished game world",
+      "src": "assets/media/game.jpg"
+    },
+    {
+      "id": "outro",
+      "time": 123,
+      "title": "Final title card with Tripo logo",
+      "src": "assets/media/outro.jpg"
+    }
+  ],
+  "knightVariants": [
+    {
+      "id": "knight-2k",
+      "targetFaces": 2000,
+      "polys": 1924,
+      "quads": 1914,
+      "file": "knight_q2k.obj",
+      "source": "website-addition"
+    },
+    {
+      "id": "knight-8k",
+      "targetFaces": 8000,
+      "polys": 8282,
+      "quads": 8273,
+      "file": "knight_q8k.obj",
+      "source": "website-addition"
+    },
+    {
+      "id": "knight-15k",
+      "targetFaces": 15000,
+      "polys": 15368,
+      "quads": 15366,
+      "file": "knight_q15k.obj",
+      "source": "website-addition"
+    }
+  ],
+  "websiteAdditions": {
+    "knightTopology": {
+      "sourceModel": "knight_tex.glb",
+      "method": "Three quad conversions of the same textured source model",
+      "targets": [
+        2000,
+        8000,
+        15000
+      ]
+    },
+    "tavernSegmentation": {
+      "sourceModel": "tavern_tex.glb",
+      "parts": 4,
+      "model": "v2.0-20260430",
+      "granularity": "simple",
+      "splitByConnectivity": false
+    },
+    "note": "Additional interactive website demonstrations; the original V3 film is unchanged."
+  }
+}
