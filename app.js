@@ -2,17 +2,7 @@ import { createReadyViewer } from './viewer.js?v=20261006-textures1';
 const $ = id => document.getElementById(id);
 const assetButtons = [...document.querySelectorAll('[data-asset]')];
 const modeButtons = [...document.querySelectorAll('[data-mode]')];
-// Defer the full-size asset board. Process illustrations load directly from HTML
-// with lightweight responsive sources and inline previews, independently of 3D.
-const deferredImages = new IntersectionObserver(entries => {
-  for (const { target, isIntersecting } of entries) {
-    if (!isIntersecting) continue;
-    target.src = target.dataset.deferredSrc;
-    delete target.dataset.deferredSrc;
-    deferredImages.unobserve(target);
-  }
-}, { rootMargin: '200px 0px' });
-document.querySelectorAll('img[data-deferred-src]').forEach(image => deferredImages.observe(image));
+// Editorial images load directly from HTML, independently of the 3D viewer.
 const copy = {
   knight: {title:'The knight.',description:'Explore the original knight assets and three polygon budgets remeshed from the same source model for this website.',input:'Four views of one character. One consistent 3D model.'},
   dragon: {title:'The dragon.',description:'A hand-drawn creature becomes a textured 3D dragon, with a native quad mesh and a 24-joint walking rig.',input:'One dragon sketch becomes a textured, rigged creature.'},
