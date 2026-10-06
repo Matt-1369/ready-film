@@ -3,7 +3,7 @@ import { GLTFLoader } from './vendor/GLTFLoader.js';
 import { OrbitControls } from './vendor/OrbitControls.js';
 import { RoomEnvironment } from './vendor/RoomEnvironment.js';
 import { QUAD_VARIANTS, PART_MODELS } from './model-variants.js';
-import { MODEL_PREVIEWS } from './assets/models/model-previews.js?v=20261006-models3';
+import { MODEL_PREVIEWS } from './assets/models/model-previews.js?v=20261006-textures1';
 import { readAsset, withDeadline } from './asset-loader.js?v=20261006-models3';
 
 // Saved Tripo outputs from READY and additional website demonstrations.
@@ -256,31 +256,65 @@ export async function createReadyViewer({ canvas, onStatus = noop, onStats = noo
   }
   async function upgradeDetails(bundle, signal, serial) {
     const pending = bundle.detailImages.filter(image => !bundle.detailDone.has(image.index));
-    if (!pending.length) return;
-    onStatus({ type: 'detail', message: 'Model ready · refining textures…' });
-    try {
-      for (const image of pending) {
-        const bytes = await readAsset(new URL(image.file, BASE), { signal, priority: 'low' });
-        signal.throwIfAborted();
-        const bitmap = await withDeadline(createImageBitmap(new Blob([bytes], { type: image.mimeType }),
-          { premultiplyAlpha: 'none', colorSpaceConversion: 'none' }), signal, bitmap => bitmap.close());
-        if (signal.aborted || disposed || serial !== loadSerial) { bitmap.close(); return; }
-        // An uploaded Texture cannot change dimensions: replace it with a new GPU texture.
-        const replacements = new Map(), source = new THREE.Source(bitmap);
-        for (const texture of bundle.texturesByImage.get(image.index)) {
-          const next = texture.clone(); next.source = source; next.needsUpdate = true;
-          replacements.set(texture, next); bundle.detailReplacements.set(texture, next);
+    if (!pending.length || signal.aborted) return;
+    const request = new AbortController(), detailSignal = request.signal;
+    const abort = () => request.abort(signal.reason);
+    signal.addEventListener('abort', abort, { once: true });
+    // Bound the whole refinement, not 39 separate serial request deadlines.
+    const timer = setTimeout(() => request.abort(new Error('Texture loading timed out.')), 90000);
+    const total = pending.reduce((sum, image) => sum + image.bytes, 0), transferred = new Map(), errors = [];
+    let nextImage = 0, completed = 0, lastPercent = -1;
+    const isCurrent = () => !detailSignal.aborted && !disposed && serial === loadSerial;
+    function progress() {
+      if (!isCurrent()) return;
+      const loaded = [...transferred.values()].reduce((sum, bytes) => sum + bytes, 0);
+      // Keep 100% for completion, including decoding and applying the last texture.
+      const percent = Math.min(99, Math.floor(total ? loaded / total * 100 : 0));
+      if (percent === lastPercent) return;
+      lastPercent = percent;
+      onStatus({ type: 'detail', percent, loaded, total, completed, totalImages: pending.length });
+    }
+    async function worker() {
+      while (nextImage < pending.length && isCurrent()) {
+        const image = pending[nextImage++];
+        try {
+          const bytes = await readAsset(new URL(image.file, BASE), { signal: detailSignal, priority: 'low',
+            onProgress: ({ loaded }) => { transferred.set(image.index, Math.min(image.bytes, loaded)); progress(); } });
+          detailSignal.throwIfAborted();
+          const bitmap = await withDeadline(createImageBitmap(new Blob([bytes], { type: image.mimeType }),
+            { premultiplyAlpha: 'none', colorSpaceConversion: 'none' }), detailSignal, bitmap => bitmap.close());
+          if (!isCurrent()) { bitmap.close(); return; }
+          // An uploaded Texture cannot change dimensions: replace it with a new GPU texture.
+          const replacements = new Map(), source = new THREE.Source(bitmap);
+          for (const texture of bundle.texturesByImage.get(image.index)) {
+            const next = texture.clone(); next.source = source; next.needsUpdate = true;
+            replacements.set(texture, next); bundle.detailReplacements.set(texture, next);
+          }
+          replaceTextures(bundle, replacements);
+          bundle.texturesByImage.set(image.index, new Set(replacements.values()));
+          for (const texture of replacements.keys()) texture.dispose();
+          bundle.detailDone.add(image.index); completed++;
+          transferred.set(image.index, image.bytes); progress();
+        } catch (error) {
+          if (detailSignal.aborted) return;
+          // One missing texture must not prevent the other parts becoming clear.
+          errors.push(error);
         }
-        replaceTextures(bundle, replacements);
-        bundle.texturesByImage.set(image.index, new Set(replacements.values()));
-        for (const texture of replacements.keys()) texture.dispose();
-        bundle.detailDone.add(image.index);
       }
-      if (serial === loadSerial && !signal.aborted) onStatus({ type: 'ready' });
+    }
+    progress();
+    try {
+      await Promise.all(Array.from({ length: Math.min(4, pending.length) }, worker));
+      if (signal.aborted || disposed || serial !== loadSerial) return;
+      if (detailSignal.aborted) throw detailSignal.reason;
+      if (errors.length) throw errors[0];
+      onStatus({ type: 'ready' });
     } catch (error) {
       if (signal.aborted || disposed || serial !== loadSerial) return;
       onStatus({ type: 'detail-error', message: 'Model ready. High-resolution textures will retry when you select this model again.' });
       console.warn('[READY textures]', error);
+    } finally {
+      clearTimeout(timer); signal.removeEventListener('abort', abort);
     }
   }
   function attach(bundle) {

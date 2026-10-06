@@ -1,4 +1,4 @@
-import { createReadyViewer } from './viewer.js?v=20261006-models3';
+import { createReadyViewer } from './viewer.js?v=20261006-textures1';
 const $ = id => document.getElementById(id);
 const assetButtons = [...document.querySelectorAll('[data-asset]')];
 const modeButtons = [...document.querySelectorAll('[data-mode]')];
@@ -93,7 +93,8 @@ function onStatus({type,message,progress,percent,loaded,total}){
   clearTimeout(loadingTimer);loadingTimer=undefined;loadingStatus=undefined;loadingVisible=false;
   status.textContent='';status.className='viewer-status ready';
   if(type==='detail'){
-    status.textContent='Model ready · refining textures…';status.className='viewer-status loading detail';
+    const amount=Number.isFinite(percent)?` ${Math.round(Math.max(0,Math.min(99,percent)))}%`:'';
+    status.textContent=`Model ready · loading textures${amount}`;status.className='viewer-status loading detail';
   }else if(type==='detail-error'){
     status.textContent='Model ready. High-resolution textures will retry when you select this model again.';
     status.className='viewer-status detail-error';
