@@ -2,8 +2,8 @@ import { createReadyViewer } from './viewer.js?v=20261006-models3';
 const $ = id => document.getElementById(id);
 const assetButtons = [...document.querySelectorAll('[data-asset]')];
 const modeButtons = [...document.querySelectorAll('[data-mode]')];
-// Native image lazy-loading may fetch several screens ahead. Keep large process
-// stills and the asset board from competing with interactive model downloads.
+// Defer the full-size asset board. Process illustrations load directly from HTML
+// with lightweight responsive sources and inline previews, independently of 3D.
 const deferredImages = new IntersectionObserver(entries => {
   for (const { target, isIntersecting } of entries) {
     if (!isIntersecting) continue;
